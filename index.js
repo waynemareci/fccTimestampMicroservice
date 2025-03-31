@@ -35,7 +35,13 @@ app.use((req, res, next) => {
 app.get('/api/:date?', (req, res) => {
 
   console.log('console.log says date: ' + req.params.date)
-  if (!req.params.date) res.json({"unix": Date.now(),utc: Date.now()})
+  if (!req.params.date) {res.json({"unix": Date.now(),utc: Date.now()});return}
+  //console.log("new Date object toString():" + new Date(req.params.date).toString())
+  if (new Date(req.params.date).toString() === "Invalid Date") {
+    //console.log("invalid date");
+    res.json({"error":"Invalid Date"})
+    return
+  }
   const timestamp = Date.parse(req.params.date)
 
   const dayOfWeek = getDayName(new Date(req.params.date).getDay())
