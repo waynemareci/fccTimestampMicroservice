@@ -35,6 +35,7 @@ app.use((req, res, next) => {
 app.get('/api/:date?', (req, res) => {
 
   console.log('console.log says date: ' + req.params.date)
+  if (!req.params.date) res.json({"unix": Date.now(),utc: Date.now()})
   const timestamp = Date.parse(req.params.date)
 
   const dayOfWeek = getDayName(new Date(req.params.date).getDay())
